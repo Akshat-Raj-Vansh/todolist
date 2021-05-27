@@ -9,9 +9,9 @@ void main() {
    ContractCubit sut;
   ContractLinking api;
   setUp(() async{
-    api = ContractLinking();
-    await api.initialSetup();
-    sut = ContractCubit(api);
+    // api = ContractLinking();
+    // await api.initialSetup();
+    // sut = ContractCubit(api);
   });
 
   
@@ -25,10 +25,10 @@ void main() {
         print(state.tasks.length);
     });
 
-    test('setTasks',() async {
-        await sut.setTasks("Lawda lassun");
-        await expectLater(sut,emits(matcher.TypeMatcher<SetTaskState>()));
-        final state =sut.state as SetTaskState;
-    });
+    // test('setTasks',() async {
+    //     await sut.setTasks("Lawda lassun");
+    //     await expectLater(sut,emits(matcher.TypeMatcher<SetTaskState>()));
+    //     final state =sut.state as SetTaskState;
+    // });
   });
 }

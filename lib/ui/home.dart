@@ -3,10 +3,12 @@ import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
+import 'package:flutter_web3_provider/ethers.dart';
 import 'package:provider/provider.dart';
 import 'dart:js_util';
 import 'package:todolist/smart_contracts/contract.dart';
 import 'package:flutter_web3_provider/ethereum.dart';
+import 'package:todolist/smart_contracts/new_contract.dart';
 import 'package:todolist/smart_contracts/task.dart';
 import 'package:todolist/state_management/contract_cubit.dart';
 import 'package:todolist/state_management/contract_state.dart';
@@ -26,7 +28,7 @@ class _HomeState extends State<Home> {
     @override
     void initState() {
         super.initState();
-       CubitProvider.of<ContractCubit>(context).getTasks();
+      // CubitProvider.of<ContractCubit>(context).getTasks();
     }
 
   @override
@@ -48,13 +50,25 @@ class _HomeState extends State<Home> {
             selectedAddress = se;
             _walletConnected = true;
         });
+        var web3 = Web3Provider(ethereum);
+        CubitProvider.of<ContractCubit>(context).startContract(web3);
+      
+        // NewContractLinking contractLinking = NewContractLinking(web3);
+        // await contractLinking.initialSetup();
+      //  print(await contractLinking.getCount());
         }
     },
 )
 ],
       ),
+      
       body:  CubitConsumer<ContractCubit,ContractState>(builder: (context,state){
+        if(state is IntialState)
+          return Center(child:Text("Connect to the wallet first"));
+        if(state is StartContractState){
+           CubitProvider.of<ContractCubit>(context).getTasks();}
         if(state is GetTaskState){
+          
           data = state.tasks;
           if(data.length != checked.length)
               checked = List.generate(data.length, (index) => false);

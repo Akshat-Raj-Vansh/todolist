@@ -10,13 +10,17 @@ class IntialState extends ContractState{
   @override
   // TODO: implement props
   List<Object> get props => [];}
-
+class StartContractState extends ContractState{
+  @override
+  // TODO: implement props
+  List<Object> get props => [];}
   class LoadingState extends ContractState{
   @override
   // TODO: implement props
   List<Object> get props => [];
 
   }
+
 
   class GetTaskState extends ContractState{
   final List<Task> tasks;

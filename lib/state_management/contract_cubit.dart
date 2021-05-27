@@ -1,14 +1,23 @@
 import 'package:async/src/result/result.dart';
 
 import 'package:cubit/cubit.dart';
+import 'package:flutter_web3_provider/ethers.dart';
 import 'package:todolist/smart_contracts/contract.dart';
+import 'package:todolist/smart_contracts/new_contract.dart';
 import 'package:todolist/state_management/contract_state.dart';
 
 
 class ContractCubit extends Cubit<ContractState> {
-  final ContractLinking contractLinking;
+  final NewContractLinking contractLinking;
 
   ContractCubit(this.contractLinking) : super(IntialState());
+
+  startContract(Web3Provider provider) async{
+    
+    await this.contractLinking.initialSetup(provider);
+    //await getTasks();
+    emit(StartContractState());
+  }
 
   getTasks() async {
     _startLoading();
