@@ -1,8 +1,12 @@
 // @dart=2.9
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_cubit/flutter_cubit.dart';
 import 'package:provider/provider.dart';
+import 'dart:js_util';
 import 'package:todolist/smart_contracts/contract.dart';
+import 'package:flutter_web3_provider/ethereum.dart';
 import 'package:todolist/smart_contracts/task.dart';
 import 'package:todolist/state_management/contract_cubit.dart';
 import 'package:todolist/state_management/contract_state.dart';
@@ -17,7 +21,8 @@ class _HomeState extends State<Home> {
  
     List<Task> data = [];
     List<bool> checked=[];
-
+    String selectedAddress;
+    bool _walletConnected = false;
     @override
     void initState() {
         super.initState();
@@ -30,6 +35,23 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text("TodoList !"),
         centerTitle: true,
+        actions: [ElevatedButton(
+    child: Text(_walletConnected?"Wallet Connected":"Connect Wallet"),
+    onPressed: () async {
+      if(!_walletConnected){
+        var accounts = await promiseToFuture(
+            ethereum.request(RequestParams(method: 'eth_requestAccounts')));
+        print(accounts);
+        String se = ethereum.selectedAddress;
+        print("selectedAddress: $se");
+        setState(() {
+            selectedAddress = se;
+            _walletConnected = true;
+        });
+        }
+    },
+)
+],
       ),
       body:  CubitConsumer<ContractCubit,ContractState>(builder: (context,state){
         if(state is GetTaskState){

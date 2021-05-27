@@ -193,6 +193,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_web3_provider:
+    dependency: "direct main"
+    description:
+      name: flutter_web3_provider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   glob:
     dependency: transitive
     description:
@@ -410,4 +417,4 @@ packages:
     version: "3.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
-  flutter: ">=1.16.0"
+  flutter: ">=1.20.0"
